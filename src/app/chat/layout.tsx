@@ -25,6 +25,7 @@ import {
 import {ChevronDownIcon, MagnifyingGlassIcon} from '@heroicons/react/20/solid'
 import SidebarNav from "@/ui/component/navigation/SidebarNav";
 import {NavigationItem} from "@/ui/component/navigation/type";
+import clsx from "clsx";
 
 const navigation: NavigationItem[] = [
     {name: 'Dashboard', href: '#', icon: HomeIcon, isCurrent: true},
@@ -47,6 +48,9 @@ function classNames(...classes) {
 const Layout = ({children}) => {
 
     const [sidebarOpen, setSidebarOpen] = useState(false)
+
+
+    const [expanded, setExpanded] = useState(true)
 
     return (
         <>
@@ -74,7 +78,7 @@ const Layout = ({children}) => {
                                 </div>
                             </TransitionChild>
 
-                            <SidebarNav className={'p-6'}
+                            <SidebarNav className={'p-6 bg-stone-100'}
                                         items={navigation}
                                         logoUrl={'https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=white'}>
                             </SidebarNav>
@@ -83,14 +87,32 @@ const Layout = ({children}) => {
                 </Dialog>
 
                 {/* Static sidebar for desktop */}
-                <div className="hidden md:w-50 lg:w-72 md:fixed md:inset-y-0 md:z-50 md:flex md:flex-col">
-                    <SidebarNav className={'p-6'}
+                <div className={clsx('hidden md:flex flex-col fixed inset-y-0 z-50 transition-width duration-300', {
+                    'md:w-50 lg:w-72': expanded,
+                    'w-23': !expanded
+                })}>
+                    <div className={'flex justify-between absolute top-2 w-full p-2 space-x-2 h-12'}>
+
+                        <button className={'w-10 bg-stone-200 text-indigo-600'}
+                                onClick={() => setExpanded(!expanded)}>X
+                        </button>
+
+                        <button className={'w-10 bg-stone-200 text-indigo-600'}
+                                onClick={() => setExpanded(!expanded)}>X
+                        </button>
+
+                    </div>
+
+                    <SidebarNav className={'px-6 py-16 bg-stone-100'}
                                 items={navigation}
-                                logoUrl={'https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=white'}>
+                    >
                     </SidebarNav>
                 </div>
 
-                <div className='md:pl-50 lg:pl-72'>
+                <div className={clsx('transition-padding duration-300', {
+                    'md:pl-50 lg:pl-72': expanded,
+                    'md:pl-23': !expanded
+                })}>
                     {/* top search bar*/}
                     <div
                         className="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-gray-200 bg-white px-4 shadow-xs sm:gap-x-6 sm:px-6 lg:px-8">

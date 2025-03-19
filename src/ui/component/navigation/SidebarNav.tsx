@@ -10,8 +10,9 @@ export type SidebarNavProps = {
 
 export default function SidebarNav({items, logoUrl, children, className}: SidebarNavProps) {
     return (
-        <nav className={clsx('flex grow flex-col gap-y-5 overflow-y-auto bg-stone-100 flex-1 border-r border-stone-300 shadow-xs', className)}>
-            <NavbarLogo logoUrl={logoUrl}></NavbarLogo>
+        <nav className={clsx('flex grow flex-col gap-y-5 overflow-y-auto flex-1 border-r border-stone-300 shadow-xs', className)}>
+            {/* Logo */}
+            {logoUrl && (<NavbarLogo logoUrl={logoUrl}></NavbarLogo>)}
             <ul role="list" className="flex flex-1 flex-col gap-y-7">
                 <li>
                     <VerticalNavbarItems items={items}></VerticalNavbarItems>
@@ -50,13 +51,13 @@ export const VerticalNavbarItem = (item: NavigationItem) => {
     return (
         <a href={item.href}
            className={clsx('group flex gap-x-3 rounded-md p-2 mt-1 text-sm/6 font-semibold', {
-               'bg-stone-700 text-white': item.isCurrent,
-               'text-stone-800 hover:bg-stone-700 hover:text-white': !item.isCurrent,
+               'bg-stone-600 text-white': item.isCurrent,
+               'text-stone-800 hover:bg-stone-200': !item.isCurrent,
            },)}>
             {item.icon && (
                 <item.icon className={clsx({
                     'text-white': item.isCurrent,
-                    'text-stone-700 group-hover:text-white': !item.isCurrent,
+                    'text-stone-700': !item.isCurrent,
                     'size-6 shrink-0': true,
                 })} aria-hidden={true}/>
             )}
