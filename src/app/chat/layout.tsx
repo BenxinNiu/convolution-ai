@@ -12,13 +12,14 @@ import {
     TransitionChild,
 } from '@headlessui/react'
 import {
+    ArrowLeftIcon, ArrowRightIcon,
     Bars3Icon,
     BellIcon,
     CalendarIcon,
     ChartPieIcon,
     DocumentDuplicateIcon,
     FolderIcon,
-    HomeIcon,
+    HomeIcon, SquaresPlusIcon,
     UsersIcon,
     XMarkIcon,
 } from '@heroicons/react/24/outline'
@@ -26,6 +27,7 @@ import {ChevronDownIcon, MagnifyingGlassIcon} from '@heroicons/react/20/solid'
 import SidebarNav from "@/ui/component/navigation/SidebarNav";
 import {NavigationItem} from "@/ui/component/navigation/type";
 import clsx from "clsx";
+import IconButton from "@/ui/component/button/IconButton";
 
 const navigation: NavigationItem[] = [
     {name: 'Dashboard', href: '#', icon: HomeIcon, isCurrent: true},
@@ -91,16 +93,28 @@ const Layout = ({children}) => {
                     'md:w-50 lg:w-72': expanded,
                     'w-23': !expanded
                 })}>
-                    <div className={'flex justify-between absolute top-2 w-full p-2 space-x-2 h-12'}>
+                    <div className={'flex justify-between absolute top-2 w-full py-2 px-6 space-x-2'}>
 
-                        <button className={'w-10 bg-stone-200 text-indigo-600'}
-                                onClick={() => setExpanded(!expanded)}>X
-                        </button>
+                        <IconButton
+                            className={clsx({'hidden': !expanded})}
+                            size={'xl'}
+                            onClick={() => setExpanded(false)}
+                            icon={ArrowLeftIcon}>
+                        </IconButton>
 
-                        <button className={'w-10 bg-stone-200 text-indigo-600'}
-                                onClick={() => setExpanded(!expanded)}>X
-                        </button>
+                        <IconButton
+                            className={clsx({'hidden': !expanded})}
+                            size={'xl'}
+                            // onClick={() => setExpanded(!expanded)}
+                            icon={SquaresPlusIcon}>
+                        </IconButton>
 
+                        <IconButton
+                            className={clsx({'hidden': expanded})}
+                            size={'xl'}
+                            onClick={() => setExpanded(true)}
+                            icon={ArrowRightIcon}>
+                        </IconButton>
                     </div>
 
                     <SidebarNav className={'px-6 py-16 bg-stone-100'}
