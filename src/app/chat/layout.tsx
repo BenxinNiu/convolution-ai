@@ -28,6 +28,7 @@ import SidebarNav from "@/ui/component/navigation/SidebarNav";
 import {NavigationItem} from "@/ui/component/navigation/type";
 import clsx from "clsx";
 import IconButton from "@/ui/component/button/IconButton";
+import Container from "@/ui/component/container/Container";
 
 const navigation: NavigationItem[] = [
     {name: 'Dashboard', href: '#', icon: HomeIcon, isCurrent: true},
@@ -48,17 +49,15 @@ function classNames(...classes) {
 }
 
 const Layout = ({children}) => {
-
-    const [sidebarOpen, setSidebarOpen] = useState(false)
-
-
+    const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false)
     const [expanded, setExpanded] = useState(true)
 
     return (
         <>
             <div>
                 {/* mobile view */}
-                <Dialog open={sidebarOpen} onClose={setSidebarOpen} className="relative z-50 md:hidden w-50">
+                <Dialog open={mobileSidebarOpen} onClose={setMobileSidebarOpen}
+                        className="relative z-50 md:hidden w-50">
                     <DialogBackdrop
                         transition
                         className="fixed inset-0 bg-gray-900/80 transition-opacity duration-300 ease-linear data-closed:opacity-0"
@@ -72,7 +71,7 @@ const Layout = ({children}) => {
                             <TransitionChild>
                                 <div
                                     className="absolute top-0 left-full flex w-16 justify-center pt-5 duration-300 ease-in-out data-closed:opacity-0">
-                                    <button type="button" onClick={() => setSidebarOpen(false)}
+                                    <button type="button" onClick={() => setMobileSidebarOpen(false)}
                                             className="-m-2.5 p-2.5">
                                         <span className="sr-only">Close sidebar</span>
                                         <XMarkIcon aria-hidden="true" className="size-6 text-white"/>
@@ -96,9 +95,12 @@ const Layout = ({children}) => {
                     <div className={'flex justify-between absolute top-2 w-full py-2 px-6 space-x-2'}>
 
                         <IconButton
-                            className={clsx({'hidden': !expanded})}
+                            className={clsx('transition-transform duration-300', {
+                                'rotate-y-180': !expanded,
+                                'rotate-0': expanded
+                            })}
                             size={'xl'}
-                            onClick={() => setExpanded(false)}
+                            onClick={() => setExpanded(!expanded)}
                             icon={ArrowLeftIcon}>
                         </IconButton>
 
@@ -107,13 +109,6 @@ const Layout = ({children}) => {
                             size={'xl'}
                             // onClick={() => setExpanded(!expanded)}
                             icon={SquaresPlusIcon}>
-                        </IconButton>
-
-                        <IconButton
-                            className={clsx({'hidden': expanded})}
-                            size={'xl'}
-                            onClick={() => setExpanded(true)}
-                            icon={ArrowRightIcon}>
                         </IconButton>
                     </div>
 
@@ -130,7 +125,7 @@ const Layout = ({children}) => {
                     {/* top search bar*/}
                     <div
                         className="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-gray-200 bg-white px-4 shadow-xs sm:gap-x-6 sm:px-6 lg:px-8">
-                        <button type="button" onClick={() => setSidebarOpen(true)}
+                        <button type="button" onClick={() => setMobileSidebarOpen(true)}
                                 className="-m-2.5 p-2.5 text-gray-700 md:hidden">
                             <span className="sr-only">Open sidebar</span>
                             <Bars3Icon aria-hidden="true" className="size-6"/>
@@ -202,7 +197,9 @@ const Layout = ({children}) => {
                     </div>
 
                     <main className="py-2 md:py-5 lg:py-10">
-                        <div className="px-4 sm:px-6 lg:px-8">{children}</div>
+                        <Container variant={'padded'}>
+                            {children}
+                        </Container>
                     </main>
                 </div>
             </div>
