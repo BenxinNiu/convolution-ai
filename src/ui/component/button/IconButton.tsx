@@ -11,6 +11,7 @@ const IconButton = forwardRef(
     ({size = 'md', srText, className, ...props}: ButtonProps, ref) => {
         return (
             <button
+                ref={ref}
                 {...props}
                 className={clsx(
                     className,
