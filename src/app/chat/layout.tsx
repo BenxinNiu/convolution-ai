@@ -58,7 +58,7 @@ const Layout = ({ children }) => {
 
     return (
         <div>
-            {/* mobile view */}
+            {/* mobile sidebar view */}
             <Dialog
                 open={mobileSidebarOpen}
                 onClose={setMobileSidebarOpen}
@@ -142,6 +142,7 @@ const Layout = ({ children }) => {
                 ></SidebarNav>
             </div>
 
+            {/* content area */}
             <div
                 className={clsx('transition-padding duration-300', {
                     'md:pl-50 lg:pl-72': expanded,
