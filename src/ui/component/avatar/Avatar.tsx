@@ -1,46 +1,69 @@
-import React from "react";
-import {clsx} from "clsx";
+import React from 'react'
+import { clsx } from 'clsx'
 
 type AvatarProps = {
-    size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl';
-    variant?: 'rounded' | 'circle';
+    size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl'
+    variant?: 'rounded' | 'circle'
+    username?: string
 } & React.ComponentPropsWithoutRef<'img'>
-const Avatar = ({className, src, size = 'sm', variant = 'default', alt}: AvatarProps) => {
+const Avatar = (
+    {
+        className,
+        size = 'sm',
+        variant = 'default',
+        username,
+        ...props
+    }: AvatarProps,
+    ref
+) => {
+    const sizeClass = clsx(
+        {
+            'h-6 w-6': size === 'xs',
+            'h-8 w-8': size === 'sm',
+            'h-10 w-10': size === 'md',
+            'h-12 w-12': size === 'lg',
+            'h-14 w-14': size === 'xl',
+            'h-16 w-16': size === 'xxl',
+        },
+        {
+            'rounded-md': variant === 'rounded',
+            'rounded-full': variant === 'circle',
+        }
+    )
+
     return (
         <>
-            {src && (
-                <span className='relative inline-block'>
+            {props.src && (
+                <div className="relative inline-block">
                     <img
-                        alt={alt}
-                        src{src}
-                        className={clsx(
-                            {
-                                'h-6 w-6': size === 'xs',
-                                'h-8 w-8': size === 'sm',
-                                'h-10 w-10': size === 'md',
-                                'h-12 w-12': size === 'lg',
-                                'h-14 w-14': size === 'xl',
-                                'h-16 w-16': size === 'xxl',
-                            },
-                            {
-                                'rounded-md': variant === 'default',
-                                'rounded-full': variant === 'circle',
-                            },
-                            className ?? ''
-                        )
-                        }
+                        ref={ref}
+                        {...props}
+                        className={clsx(sizeClass, className ?? '')}
                     />
-                </span>
+                </div>
             )}
 
-            {!src && (
-                <span className="inline-flex size-6 items-center justify-center rounded-full bg-gray-500">
-                    <span className="text-xs font-medium text-white">TW</span>
+            {!props.src && (
+                <span
+                    className={clsx(
+                        'inline-flex items-center justify-center bg-zinc-500',
+                        sizeClass
+                    )}
+                >
+                    <span className="text-xs font-medium text-white">
+                        {getInitials(username)}
+                    </span>
                 </span>
             )}
         </>
+    )
+}
 
-    );
+const getInitials = (name: string | undefined) => {
+    return (name ?? '')
+        .split(' ')
+        .map((word) => word[0].toUpperCase())
+        .join('')
 }
 
 Avatar.displayName = 'Avatar'
