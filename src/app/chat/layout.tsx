@@ -11,11 +11,9 @@ import {
     ArrowLeftIcon,
     Bars3Icon,
     BellIcon,
-    CalendarIcon,
-    ChartPieIcon,
-    DocumentDuplicateIcon,
-    FolderIcon,
-    HomeIcon,
+    BookmarkIcon,
+    ChatBubbleLeftRightIcon,
+    SparklesIcon,
     SquaresPlusIcon,
     UsersIcon,
     XMarkIcon,
@@ -30,17 +28,14 @@ import Avatar from '@/ui/component/avatar/Avatar'
 import Dropdown, { DropdownOptionProps } from '@/ui/component/dropdown/Dropdown'
 
 const navigation: NavigationItem[] = [
-    { name: 'Dashboard', href: '#', icon: HomeIcon, isCurrent: true },
-    { name: 'Team', href: '#', icon: UsersIcon, isCurrent: false },
-    { name: 'Projects', href: '#', icon: FolderIcon, isCurrent: false },
-    { name: 'Calendar', href: '#', icon: CalendarIcon, isCurrent: false },
     {
-        name: 'Documents',
+        name: 'Chat',
         href: '#',
-        icon: DocumentDuplicateIcon,
-        isCurrent: false,
+        icon: ChatBubbleLeftRightIcon,
+        isCurrent: true,
     },
-    { name: 'Reports', href: '#', icon: ChartPieIcon, isCurrent: false },
+    { name: 'History', href: '#', icon: BookmarkIcon, isCurrent: false },
+    { name: 'Agents', href: '#', icon: SparklesIcon, isCurrent: false },
 ]
 
 const userNavigation: DropdownOptionProps[] = [
@@ -123,14 +118,16 @@ const Layout = ({ children }) => {
                             'rotate-y-180': !expanded,
                             'rotate-0': expanded,
                         })}
-                        size={'xl'}
+                        size={'md'}
+                        variant={'tertiary'}
                         onClick={() => setExpanded(!expanded)}
                         icon={ArrowLeftIcon}
                     ></IconButton>
 
                     <IconButton
                         className={clsx({ hidden: !expanded })}
-                        size={'xl'}
+                        size={'md'}
+                        variant={'tertiary'}
                         // onClick={() => setExpanded(!expanded)}
                         icon={SquaresPlusIcon}
                     ></IconButton>
@@ -236,7 +233,7 @@ const Layout = ({ children }) => {
                     </div>
                 </div>
 
-                <main className="py-2 md:py-5 lg:py-10">
+                <main>
                     <Container variant={'padded'}>{children}</Container>
                 </main>
             </div>
